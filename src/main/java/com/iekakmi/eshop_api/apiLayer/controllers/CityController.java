@@ -1,7 +1,6 @@
 package com.iekakmi.eshop_api.apiLayer.controllers;
 
 import com.iekakmi.eshop_api.dataAccessLayer.services.CityService;
-import com.iekakmi.eshop_api.apiLayer.models.ResponseContainer;
 import com.iekakmi.eshop_api.dataAccessLayer.models.CityDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -20,37 +19,35 @@ public class CityController
 	}
 
 	@GetMapping
-	public ResponseEntity<ResponseContainer<List<CityDto>>> getCities()
+	public ResponseEntity<?> getCities()
 	{
 		List<CityDto> response = cityService.getCities();
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseContainer<CityDto>> getCityById(@PathVariable Integer id)
+	public ResponseEntity<?> getCityById(@PathVariable Integer id)
 	{
 		CityDto response = cityService.getCityById(id);
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseContainer<Integer>> createCity(@Valid @RequestBody CityDto dto)
+	public ResponseEntity<?> createCity(@Valid @RequestBody CityDto dto)
 	{
 		int id = cityService.createCity(dto);
-		return new ResponseEntity<>(new ResponseContainer<>(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(id, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ResponseContainer<CityDto>> updateCity(
-			@PathVariable Integer id, @Valid @RequestBody CityDto dto)
+	@PutMapping
+	public ResponseEntity<?> updateCity(@Valid @RequestBody CityDto dto)
 	{
-		dto.setId(id);
 		CityDto updated = cityService.updateCity(dto);
-		return ResponseEntity.ok(new ResponseContainer<>(updated));
+		return ResponseEntity.ok(updated);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCity(@PathVariable Integer id)
+	public ResponseEntity<?> deleteCity(@PathVariable Integer id)
 	{
 		cityService.deleteCity(id);
 		return ResponseEntity.ok().build();

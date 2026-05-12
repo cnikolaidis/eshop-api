@@ -1,7 +1,6 @@
 package com.iekakmi.eshop_api.apiLayer.controllers;
 
 import com.iekakmi.eshop_api.dataAccessLayer.services.ProductService;
-import com.iekakmi.eshop_api.apiLayer.models.ResponseContainer;
 import com.iekakmi.eshop_api.dataAccessLayer.models.ProductDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -20,37 +19,35 @@ public class ProductController
 	}
 
 	@GetMapping
-	public ResponseEntity<ResponseContainer<List<ProductDto>>> getProducts()
+	public ResponseEntity<?> getProducts()
 	{
 		List<ProductDto> response = productService.getProducts();
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseContainer<ProductDto>> getProductById(@PathVariable Integer id)
+	public ResponseEntity<?> getProductById(@PathVariable Integer id)
 	{
 		ProductDto response = productService.getProductById(id);
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseContainer<Integer>> createProduct(@Valid @RequestBody ProductDto dto)
+	public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDto dto)
 	{
 		int id = productService.createProduct(dto);
-		return new ResponseEntity<>(new ResponseContainer<>(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(id, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ResponseContainer<ProductDto>> updateProduct(
-			@PathVariable Integer id, @Valid @RequestBody ProductDto dto)
+	@PutMapping
+	public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductDto dto)
 	{
-		dto.setId(id);
 		ProductDto updated = productService.updateProduct(dto);
-		return ResponseEntity.ok(new ResponseContainer<>(updated));
+		return ResponseEntity.ok(updated);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteProduct(@PathVariable Integer id)
+	public ResponseEntity<?> deleteProduct(@PathVariable Integer id)
 	{
 		productService.deleteProduct(id);
 		return ResponseEntity.ok().build();

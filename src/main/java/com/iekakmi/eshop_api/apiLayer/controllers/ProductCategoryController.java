@@ -2,7 +2,6 @@ package com.iekakmi.eshop_api.apiLayer.controllers;
 
 import com.iekakmi.eshop_api.dataAccessLayer.services.ProductCategoryService;
 import com.iekakmi.eshop_api.dataAccessLayer.models.ProductCategoryDto;
-import com.iekakmi.eshop_api.apiLayer.models.ResponseContainer;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
@@ -20,37 +19,35 @@ public class ProductCategoryController
 	}
 
 	@GetMapping
-	public ResponseEntity<ResponseContainer<List<ProductCategoryDto>>> getProductCategories()
+	public ResponseEntity<?> getProductCategories()
 	{
 		List<ProductCategoryDto> response = productCategoryService.getProductCategories();
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseContainer<ProductCategoryDto>> getProductCategoryById(@PathVariable Integer id)
+	public ResponseEntity<?> getProductCategoryById(@PathVariable Integer id)
 	{
 		ProductCategoryDto response = productCategoryService.getProductCategoryById(id);
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseContainer<Integer>> createProductCategory(@Valid @RequestBody ProductCategoryDto dto)
+	public ResponseEntity<?> createProductCategory(@Valid @RequestBody ProductCategoryDto dto)
 	{
 		int id = productCategoryService.createProductCategory(dto);
-		return new ResponseEntity<>(new ResponseContainer<>(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(id, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ResponseContainer<ProductCategoryDto>> updateProductCategory(
-			@PathVariable Integer id, @Valid @RequestBody ProductCategoryDto dto)
+	@PutMapping
+	public ResponseEntity<?> updateProductCategory(@Valid @RequestBody ProductCategoryDto dto)
 	{
-		dto.setId(id);
 		ProductCategoryDto updated = productCategoryService.updateProductCategory(dto);
-		return ResponseEntity.ok(new ResponseContainer<>(updated));
+		return ResponseEntity.ok(updated);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteProductCategory(@PathVariable Integer id)
+	public ResponseEntity<?> deleteProductCategory(@PathVariable Integer id)
 	{
 		productCategoryService.deleteProductCategory(id);
 		return ResponseEntity.ok().build();

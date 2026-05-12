@@ -1,7 +1,6 @@
 package com.iekakmi.eshop_api.apiLayer.controllers;
 
 import com.iekakmi.eshop_api.dataAccessLayer.services.OrderItemService;
-import com.iekakmi.eshop_api.apiLayer.models.ResponseContainer;
 import com.iekakmi.eshop_api.dataAccessLayer.models.OrderItemDto;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
@@ -19,28 +18,28 @@ public class OrderItemController
 	}
 
 	@GetMapping
-	public ResponseEntity<ResponseContainer<List<OrderItemDto>>> getOrderItems()
+	public ResponseEntity<?> getOrderItems()
 	{
 		List<OrderItemDto> response = orderItemService.getOrderItems();
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseContainer<OrderItemDto>> getOrderItemById(@PathVariable Integer id)
+	public ResponseEntity<?> getOrderItemById(@PathVariable Integer id)
 	{
 		OrderItemDto response = orderItemService.getOrderItemById(id);
-		return ResponseEntity.ok(new ResponseContainer<>(response));
+		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseContainer<Integer>> createOrderItem(@RequestBody OrderItemDto dto)
+	public ResponseEntity<?> createOrderItem(@RequestBody OrderItemDto dto)
 	{
 		int id = orderItemService.createOrderItem(dto);
-		return new ResponseEntity<>(new ResponseContainer<>(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(id, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteOrderItem(@PathVariable Integer id)
+	public ResponseEntity<?> deleteOrderItem(@PathVariable Integer id)
 	{
 		orderItemService.deleteOrderItem(id);
 		return ResponseEntity.ok().build();
