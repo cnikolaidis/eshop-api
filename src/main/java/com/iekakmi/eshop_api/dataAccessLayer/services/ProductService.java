@@ -76,9 +76,14 @@ public class ProductService
 	{
 		Product entity = productRepository.findById(p.getId())
 				.orElseThrow(() -> new EntityNotFoundException("Product", p.getId()));
+		ProductCategory category = productCategoryRepository.findById(p.getCategoryId())
+				.orElseThrow(() -> new EntityNotFoundException("ProductCategory", p.getCategoryId()));
 		entity.setTitle(p.getTitle());
 		entity.setDescription(p.getDescription());
 		entity.setPrice(p.getPrice());
+		category = new ProductCategory();
+		category.setId(p.getCategoryId());
+		entity.setCategory(category);
 		productRepository.save(entity);
 		return p;
 	}

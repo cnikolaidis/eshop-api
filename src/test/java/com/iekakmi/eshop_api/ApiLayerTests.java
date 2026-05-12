@@ -1,7 +1,7 @@
 package com.iekakmi.eshop_api;
 
+import com.iekakmi.eshop_api.apiLayer.ApiExceptionHandler;
 import com.iekakmi.eshop_api.apiLayer.controllers.CityController;
-import com.iekakmi.eshop_api.apiLayer.configurations.GlobalExceptionHandler;
 import com.iekakmi.eshop_api.dataAccessLayer.models.CityDto;
 import com.iekakmi.eshop_api.dataAccessLayer.models.exceptions.EntityNotFoundException;
 import com.iekakmi.eshop_api.dataAccessLayer.services.CityService;
@@ -37,7 +37,7 @@ public class ApiLayerTests
 	{
 		CityController controller = new CityController(cityService);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setControllerAdvice(new GlobalExceptionHandler())
+				.setControllerAdvice(new ApiExceptionHandler())
 				.build();
 	}
 

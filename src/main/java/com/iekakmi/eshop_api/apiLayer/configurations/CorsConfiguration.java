@@ -9,6 +9,6 @@ public class CorsConfiguration implements WebMvcConfigurer
 	@Override
 	public void addCorsMappings(CorsRegistry reg)
 	{
-		reg.addMapping("/**").allowedMethods("*");
+		reg.addMapping("/**").allowedMethods("*").allowedOrigins("*");
 	}
 }
